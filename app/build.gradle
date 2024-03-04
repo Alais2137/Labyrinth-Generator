@@ -22,11 +22,15 @@ dependencies {
 
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:31.1-jre'
+
+    // Use Apache Commons Lang for Builders.
+    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.14.0'
+
 }
 
 application {
     // Define the main class for the application.
-    mainClass = 'labyrinth.App'
+    mainClass = 'labyrinth.model.App'
 }
 
 tasks.named('test') {

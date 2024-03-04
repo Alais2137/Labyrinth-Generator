@@ -1,4 +1,4 @@
-package labyrinth;
+package labyrinth.model;
 
 import java.util.ArrayList;
 
@@ -27,19 +27,31 @@ public class Labyrinth {
         return this.height;
     }
 
-    public String getType(int x, int y) {
-        return this.getValue(x, y) ? "empty" : "wall";
+    public boolean getValue(int x, int y) {
+        return this.cells.get(y * this.width + x).isPassage();
     }
 
-    public boolean getValue(int x, int y) {
-        return this.cells.get(y * this.width + x).isEmpty();
+    protected Field getField(int x, int y) {
+        return this.cells.get(x * this.width + y);
     }
 
     protected void setAsWall(int x, int y) {
         this.cells.get(x * this.width + y).setAsWall();
     }
 
-    protected void setAsEmpty(int x, int y) {
-        this.cells.get(x * this.width + y).setAsEmpty();
+    protected void setAsPassage(int x, int y) {
+        this.cells.get(x * this.width + y).setAsPassage();
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < this.height; i++) {
+            for (int j = 0; j < this.width; j++) {
+                sb.append(this.cells.get(i * this.width + j).toString());
+            }
+            sb.append("\n");
+        }
+        return sb.toString();
     }
 }
