@@ -1,0 +1,3 @@
+module labyrinth {
+    exports labyrinth;
+}
