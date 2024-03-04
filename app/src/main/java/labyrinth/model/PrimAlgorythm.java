@@ -8,6 +8,7 @@ public class PrimAlgorythm {
     public static Labyrinth generateLabyrinth(int width, int height) {
         Labyrinth labyrinth = new Labyrinth(width, height);
 
+        // FIXME - Walllist is wrong, it should be a list of walls, not a list of fields
         ArrayList<Field> wallList = new ArrayList<>();
         ArrayList<Field> visitedList = new ArrayList<>();
         
@@ -33,7 +34,16 @@ public class PrimAlgorythm {
             wallList.add(labyrinth.getField(x, y + 1));
         }
 
-        // FIXME - There is something wrong
+            // Start with a grid full of walls.
+            // Pick a cell, mark it as part of the maze. Add the walls of the cell to the wall list.
+            // While there are walls in the list:
+            // Pick a random wall from the list. If only one of the cells that the wall divides is visited, then:
+            // Make the wall a passage and mark the unvisited cell as part of the maze.
+            // Add the neighboring walls of the cell to the wall list.
+            // Remove the wall from the list.
+
+        // FIXME - You idiot, If only one of the cells that the W A L L divides is visited
+
         // While there are walls in the list
         while (!wallList.isEmpty()) {
             Field wall = wallList.get(random.nextInt(wallList.size()));
