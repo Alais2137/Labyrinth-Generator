@@ -6,14 +6,16 @@ public class Labyrinth {
     private int width;
     private int height;
 
-    private ArrayList<Boolean> cells;
+    private ArrayList<Field> cells;
 
-    public Labyrinth(int width, int height) {
+    protected Labyrinth(int width, int height) {
         this.width = width;
         this.height = height;
         this.cells = new ArrayList<>(width * height);
-        for (int i = 0; i < width * height; i++) {
-            this.cells.add(false);
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                this.cells.add(new Field(i, j));
+            }
         }
     }
 
@@ -30,14 +32,14 @@ public class Labyrinth {
     }
 
     public boolean getValue(int x, int y) {
-        return this.cells.get(y * this.width + x);
+        return this.cells.get(y * this.width + x).isEmpty();
     }
 
     protected void setAsWall(int x, int y) {
-        this.cells.set(y * this.width + x, false);
+        this.cells.get(x * this.width + y).setAsWall();
     }
 
     protected void setAsEmpty(int x, int y) {
-        this.cells.set(y * this.width + x, true);
+        this.cells.get(x * this.width + y).setAsEmpty();
     }
 }
