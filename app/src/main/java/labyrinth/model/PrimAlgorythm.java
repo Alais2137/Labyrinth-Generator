@@ -23,6 +23,7 @@ public class PrimAlgorythm implements Algorythm {
     @Override
     public Labyrinth generateLabyrinth() {
 
+        // TODO - change to pairs of wall and neighbour
         HashSet<Field> frontierSet = new HashSet<>();
         ArrayList<Field> visitedList = new ArrayList<>();
         
@@ -33,8 +34,7 @@ public class PrimAlgorythm implements Algorythm {
         int y = random.nextInt(height);
 
         labyrinth.setAsPassage(x, y);
-
-        frontierSet.add(labyrinth.getField(x, y));
+        frontierSet.addAll(addFrontiers(x, y));
 
         // While 
         while (!frontierSet.isEmpty()) {
@@ -42,24 +42,31 @@ public class PrimAlgorythm implements Algorythm {
             int fx = frontier.getX();
             int fy = frontier.getY();
 
-            HashSet<Field> neighbours = addNeighbours(fx, fy);
+            if (!frontier.isPassage()) {
+                HashSet<Field> neighbours = addNeighbours(fx, fy);
 
-            if (neighbours.size() == 1) {
-                Field randomNeighbour = getRandomFromSet(neighbours);
-                int nx = randomNeighbour.getX();
-                int ny = randomNeighbour.getY();
+                if (!neighbours.isEmpty()) {
+                    Field randomNeighbour = getRandomFromSet(neighbours);
+                    int nx = randomNeighbour.getX();
+                    int ny = randomNeighbour.getY();
 
-                labyrinth.setAsPassage((nx + fx)/2, (ny + fy)/2);
+                    labyrinth.setAsPassage((nx + fx)/2, (ny + fy)/2);
+                    labyrinth.setAsPassage(fx, fy);
 
-                frontierSet.addAll(addFrontiers(nx, ny));
-                frontierSet.remove(frontier);
+                    frontierSet.addAll(addFrontiers(fx, fy));
+                }
             }
 
-            visitedList.add(frontier);
-            System.out.println(visitedList.size());  // FIXME - blocks at 3
-        }
+            frontierSet.remove(frontier);
 
-            // TODO - Finish Prim's algorithm
+            visitedList.add(frontier);
+            if (visitedList.size() > 100) {
+                System.out.println("BREAK " + x + " " + y); // FIXME - it generates chessboard
+                break;
+            }
+            System.out.println(visitedList.size() + " " + fx + " " + fy);
+            System.out.println(labyrinth.toString());
+        }
 
         // Return the generated labyrinth
         return labyrinth;
