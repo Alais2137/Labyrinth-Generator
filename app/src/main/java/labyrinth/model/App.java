@@ -3,8 +3,11 @@ package labyrinth.model;
 public class App {
 
     public static void main(String[] args) {
-        Algorythm generathor10x10 = new PrimAlgorythm(10, 10);
-        Labyrinth labyrinth = generathor10x10.generateLabyrinth();
-        System.out.println(labyrinth);
+        Algorythm generathor21x21 = new PrimAlgorythm(21, 21);
+        System.out.println(generathor21x21.generateLabyrinth().toString());
+        System.out.println(generathor21x21.generateLabyrinth().toString());
+        System.out.println(generathor21x21.generateLabyrinth().toString());
+        System.out.println(generathor21x21.generateLabyrinth().toString());
+        System.out.println(generathor21x21.generateLabyrinth().toString());
     }
 }

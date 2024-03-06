@@ -8,5 +8,6 @@
         "FIXME": {
             "background": "Red"
         }
-    }
+    },
+    "java.compile.nullAnalysis.mode": "automatic"
 }
