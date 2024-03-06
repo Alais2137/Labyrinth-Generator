@@ -2,6 +2,7 @@ package labyrinth.model;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PrimAlgorythmTest {
 
@@ -26,5 +27,29 @@ public class PrimAlgorythmTest {
             }
         }
         assertEquals(1, passages);
+
+        primAlgorythm = new PrimAlgorythm(5, 5);
+        labyrinth = primAlgorythm.generateLabyrinth();
+        passages = 0;
+        for (int i = 0; i < labyrinth.getWidth(); i++) {
+            for (int j = 0; j < labyrinth.getHeight(); j++) {
+                if (labyrinth.getValue(i, j)) {
+                    passages++;
+                }
+            }
+        }
+        assertTrue(passages > 1 && passages < 16);
+
+        primAlgorythm = new PrimAlgorythm(11, 11);
+        labyrinth = primAlgorythm.generateLabyrinth();
+        passages = 0;
+        for (int i = 0; i < labyrinth.getWidth(); i++) {
+            for (int j = 0; j < labyrinth.getHeight(); j++) {
+                if (labyrinth.getValue(i, j)) {
+                    passages++;
+                }
+            }
+        }
+        assertTrue(passages > 1 && passages < 100);
     }
 }

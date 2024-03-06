@@ -42,6 +42,8 @@ test {
     testLogging {
         events "passed", "skipped", "failed"
     }
+
+    finalizedBy jacocoTestReport
 }
 
 jacoco {
@@ -52,6 +54,6 @@ jacocoTestReport {
     reports {
         xml.required = false
         csv.required = false
-        html.outputLocation = layout.buildDirectory.dir('jacocoHTML')
+        html.outputLocation = layout.buildDirectory.dir('jacoco')
     }
 }
