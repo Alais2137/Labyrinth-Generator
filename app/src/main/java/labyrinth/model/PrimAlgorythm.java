@@ -34,8 +34,7 @@ public class PrimAlgorythm implements Algorythm {
 
         labyrinth.setAsPassage(x, y);
 
-        // Add the starting point's frontiers to the frontier list
-        frontierSet.addAll(addFrontiers(x, y));
+        frontierSet.add(labyrinth.getField(x, y));
 
         // While 
         while (!frontierSet.isEmpty()) {
