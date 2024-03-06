@@ -1,5 +1,5 @@
 package labyrinth.model;
 
-public abstract class Algorythm {
-
+public interface Algorythm {    
+    public Labyrinth generateLabyrinth(int width, int height);
 }

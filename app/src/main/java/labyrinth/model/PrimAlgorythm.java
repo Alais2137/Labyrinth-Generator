@@ -1,16 +1,30 @@
 package labyrinth.model;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Random;
 
-public class PrimAlgorythm {
+public class PrimAlgorythm implements Algorythm {
 
-    public static Labyrinth generateLabyrinth(int width, int height) {
-        Labyrinth labyrinth = new Labyrinth(width, height);
+    private int width;
+    private int height;
 
-        // FIXME - Walllist is wrong, it should be a list of walls, not a list of fields
-        ArrayList<Field> wallList = new ArrayList<>();
-        ArrayList<Field> visitedList = new ArrayList<>();
+    private Labyrinth labyrinth;
+
+    {        
+        labyrinth = new Labyrinth(width, height);
+    }
+
+    public PrimAlgorythm(int width, int height) {
+        this.width = width;
+        this.height = height;
+    }
+
+    // https://stackoverflow.com/questions/29739751/implementing-a-randomly-generated-maze-using-prims-algorithm
+    @Override
+    public Labyrinth generateLabyrinth(int width, int height) {
+
+        HashSet<Field> frontierSet = new HashSet<>();
+        HashSet<Field> visitedSet = new HashSet<>();
         
         Random random = new Random();
 
@@ -19,75 +33,121 @@ public class PrimAlgorythm {
         int y = random.nextInt(height);
 
         labyrinth.setAsPassage(x, y);
-        visitedList.add(labyrinth.getField(x, y));
-        
-        if (x > 0) {
-            wallList.add(labyrinth.getField(x - 1, y));
-        }
-        if (x < width - 1) {
-            wallList.add(labyrinth.getField(x + 1, y));
-        }
-        if (y > 0) {
-            wallList.add(labyrinth.getField(x, y - 1));
-        }
-        if (y < height - 1) {
-            wallList.add(labyrinth.getField(x, y + 1));
-        }
 
-            // Start with a grid full of walls.
-            // Pick a cell, mark it as part of the maze. Add the walls of the cell to the wall list.
-            // While there are walls in the list:
-            // Pick a random wall from the list. If only one of the cells that the wall divides is visited, then:
-            // Make the wall a passage and mark the unvisited cell as part of the maze.
-            // Add the neighboring walls of the cell to the wall list.
-            // Remove the wall from the list.
+        // Add the starting point's frontiers to the frontier list
+        frontierSet.addAll(addFirstFrontiers(x, y));
 
-        // FIXME - You idiot, If only one of the cells that the W A L L divides is visited
+        // While 
+        while (!frontierSet.isEmpty()) {
+            Field frontier = getRandomFromSet(frontierSet);
+            int fx = frontier.getX();
+            int fy = frontier.getY();
 
-        // While there are walls in the list
-        while (!wallList.isEmpty()) {
-            Field wall = wallList.get(random.nextInt(wallList.size()));
+            HashSet<Field> neighbours = addNeighbours(fx, fy, visitedSet);
 
-            // Count the number of visited neighbours
-            int visitedNeighbours = 0;
-            if (wall.getX() > 0 && visitedList.contains(labyrinth.getField(wall.getX() - 1, wall.getY()))) {
-                visitedNeighbours++;
-            }
-            if (wall.getX() < width - 1 && visitedList.contains(labyrinth.getField(wall.getX() + 1, wall.getY()))) {
-                visitedNeighbours++;
-            }
-            if (wall.getY() > 0 && visitedList.contains(labyrinth.getField(wall.getX(), wall.getY() - 1))) {
-                visitedNeighbours++;
-            }
-            if (wall.getY() < height - 1 && visitedList.contains(labyrinth.getField(wall.getX(), wall.getY() + 1))) {
-                visitedNeighbours++;
-            }
+            if (!neighbours.isEmpty()) {
+                Field randomNeighbour = getRandomFromSet(neighbours);
+                int nx = randomNeighbour.getX();
+                int ny = randomNeighbour.getY();
 
-            // If the wall has only one visited neighbour, set it as passage
-            // and add its neighbours to the wall list
-            if (visitedNeighbours == 1) {
-                labyrinth.setAsPassage(wall.getX(), wall.getY());
+                labyrinth.setAsPassage((nx + fx)/2, (ny + fy)/2);
 
-                if (wall.getX() > 0 && !visitedList.contains(labyrinth.getField(wall.getX() - 1, wall.getY()))) {
-                    wallList.add(labyrinth.getField(wall.getX() - 1, wall.getY()));
-                }
-                if (wall.getX() < width - 1 && !visitedList.contains(labyrinth.getField(wall.getX() + 1, wall.getY()))) {
-                    wallList.add(labyrinth.getField(wall.getX() + 1, wall.getY()));
-                }
-                if (wall.getY() > 0 && !visitedList.contains(labyrinth.getField(wall.getX(), wall.getY() - 1))) {
-                    wallList.add(labyrinth.getField(wall.getX(), wall.getY() - 1));
-                }
-                if (wall.getY() < height - 1 && !visitedList.contains(labyrinth.getField(wall.getX(), wall.getY() + 1))) {
-                    wallList.add(labyrinth.getField(wall.getX(), wall.getY() + 1));
-                }
+                frontierSet.addAll(addFrontiers(nx, ny));
             }
             
-            // Remove the wall from the list and add it to the visited list
-            visitedList.add(labyrinth.getField(wall.getX(), wall.getY()));
-            wallList.remove(wall);
+            visitedSet.add(frontier);
+            frontierSet.remove(frontier);
         }
+
+            // TODO - Finish Prim's algorithm
 
         // Return the generated labyrinth
         return labyrinth;
+    }
+
+    private Field getRandomFromSet(HashSet<Field> set) {
+        Random random = new Random();
+        int index = random.nextInt(set.size());
+        int i = 0;
+        for (Field field : set) {
+            if (i == index) {
+                return field;
+            }
+            i++;
+        }
+        return null;
+    }
+
+    private HashSet<Field> addFirstFrontiers(int x, int y) {
+        HashSet<Field> frontiers = new HashSet<>();
+
+        if (x > 1) {
+            frontiers.add(labyrinth.getField(x - 2, y));
+        }
+        if (x < width - 2) {
+            frontiers.add(labyrinth.getField(x + 2, y));
+        }
+        if (y > 1) {
+            frontiers.add(labyrinth.getField(x, y - 2));
+        }
+        if (y < height - 2) {
+            frontiers.add(labyrinth.getField(x, y + 2));
+        }
+
+        return frontiers;
+    }
+
+    private HashSet<Field> addFrontiers(int x, int y) {
+        HashSet<Field> frontiers = new HashSet<>();
+
+        if (x > 1) {
+            if (!labyrinth.getField(x - 2, y).isPassage()) {
+                frontiers.add(labyrinth.getField(x - 2, y));
+            }
+        }
+        if (x < width - 2) {
+            if (!labyrinth.getField(x + 2, y).isPassage()) {
+                frontiers.add(labyrinth.getField(x + 2, y));
+            }
+        }
+        if (y > 1) {
+            if (!labyrinth.getField(x, y - 2).isPassage()) {
+                frontiers.add(labyrinth.getField(x, y - 2));
+            }
+        }
+        if (y < height - 2) {
+            if (!labyrinth.getField(x, y + 2).isPassage()) {
+                frontiers.add(labyrinth.getField(x, y + 2));
+            }
+        }
+
+        return frontiers;
+    }
+
+    private HashSet<Field> addNeighbours(int x, int y, HashSet<Field> visitedSet) {
+        HashSet<Field> neighbours = new HashSet<>();
+
+        if (x > 1) {
+            if (labyrinth.getField(x - 2, y).isPassage() && !visitedSet.contains(labyrinth.getField(x - 2, y))) {
+                neighbours.add(labyrinth.getField(x - 2, y));
+            }
+        }
+        if (x < width - 2) {
+            if (labyrinth.getField(x + 2, y).isPassage() && !visitedSet.contains(labyrinth.getField(x + 2, y))) {
+                neighbours.add(labyrinth.getField(x + 2, y));
+            }
+        }
+        if (y > 1) {
+            if (labyrinth.getField(x, y - 2).isPassage() && !visitedSet.contains(labyrinth.getField(x, y - 2))) {
+                neighbours.add(labyrinth.getField(x, y - 2));
+            }
+        }
+        if (y < height - 2) {
+            if (labyrinth.getField(x, y + 2).isPassage() && !visitedSet.contains(labyrinth.getField(x, y + 2))) {
+                neighbours.add(labyrinth.getField(x, y + 2));
+            }
+        }
+
+        return neighbours;
     }
 }
