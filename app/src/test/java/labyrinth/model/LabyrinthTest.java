@@ -42,7 +42,7 @@ public class LabyrinthTest {
         Labyrinth labyrinth = new Labyrinth(3, 3);
         labyrinth.setAsPassage(1, 1);
 
-        String expected = "▓▓▓\n▓ ▓\n▓▓▓\n";
+        String expected = "###\n# #\n###\n";
 
         assertEquals(expected, labyrinth.toString());
     }

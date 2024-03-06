@@ -36,7 +36,7 @@ public class FieldTest {
     @Test
     public void toStringTest() {
         Field field = new Field(1, 2);
-        assertEquals("▓", field.toString());
+        assertEquals("#", field.toString());
         field.setAsPassage();
         assertEquals(" ", field.toString());
     }

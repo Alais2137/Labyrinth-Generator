@@ -44,6 +44,6 @@ public class Field {
 
     @Override
     public String toString() {
-        return isPassage ? " " : "▓";
+        return isPassage ? " " : "#";
     }
 }
