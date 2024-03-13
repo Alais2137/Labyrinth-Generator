@@ -12,11 +12,11 @@ Simple console app generating labirynth by Prim's Algorythm created with Java on
 ### To Do
 * Export to file and database
 * JavaFX window app
-** Watch generation process
+  * Watch generation process
 * Implement solving algorythms
-** DFS
-** BFS
-** A*
+  * DFS
+  * BFS
+  * A*
 
 ## Technologies
 Project created with:
