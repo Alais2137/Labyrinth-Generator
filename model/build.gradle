@@ -30,10 +30,10 @@ dependencies {
 
 }
 
-application {
-    // Define the main class for the application.
-    mainClass = 'labyrinth.model.App'
-}
+// application {
+//     // Define the main class for the application.
+//     mainClass = 'labyrinth.model.App'
+// }
 
 test {
     // Use JUnit Platform for unit tests.

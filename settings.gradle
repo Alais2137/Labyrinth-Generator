@@ -8,4 +8,5 @@
  */
 
 rootProject.name = 'Labyrinth'
-include('app')
+
+include('model', 'view')
