@@ -48,7 +48,7 @@ public class Labyrinth {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < this.height; i++) {
             for (int j = 0; j < this.width; j++) {
-                sb.append(this.cells.get(i * this.width + j).toString());
+                sb.append(this.cells.get(i * this.height + j).toString());
             }
             sb.append("\n");
         }

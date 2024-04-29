@@ -30,18 +30,17 @@ public class GeneratorController {
     public void generate() {
         int width = widthSpinner.getValue();
         int height = heightSpinner.getValue();
-        
-        resizeLabirynthPane(width, height);
 
         PrimAlgorythm algorythm = new PrimAlgorythm(width, height);
 
         Labyrinth labyrinth = algorythm.generateLabyrinth();
+        
+        prepareLabirynthPane(labyrinth.getWidth(), labyrinth.getHeight());
 
         drawLabyrinth(labyrinth);
     }
 
-    private void resizeLabirynthPane(int width, int height) {
-        // max 500 x 500
+    private void prepareLabirynthPane(int width, int height) {
         double maxHeight = labirynthPane.getMaxHeight();
         double maxWidth = labirynthPane.getMaxWidth();
 
@@ -62,7 +61,7 @@ public class GeneratorController {
     private void drawLabyrinth(Labyrinth labyrinth) {
         labirynthPane.getChildren().clear();
 
-        double cellSize = labirynthPane.getWidth() / labyrinth.getWidth();
+        double cellSize = Math.min(labirynthPane.getPrefHeight() / labyrinth.getHeight(), labirynthPane.getPrefWidth() / labyrinth.getWidth());
 
         for (int y = 0; y < labyrinth.getHeight(); y++) {
             for (int x = 0; x < labyrinth.getWidth(); x++) {
