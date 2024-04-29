@@ -41,18 +41,19 @@ public class GeneratorController {
     }
 
     private void resizeLabirynthPane(int width, int height) {
-        int maxHeight = (int) Math.round(labirynthPane.getMaxHeight());
-        int maxWidth = (int) Math.round(labirynthPane.getMaxWidth());
+        // max 500 x 500
+        double maxHeight = labirynthPane.getMaxHeight();
+        double maxWidth = labirynthPane.getMaxWidth();
 
-        int cellSize = Math.min(maxHeight / height, maxWidth / width);
+        double cellSize = Math.min(maxWidth / width, maxHeight / height);
 
-        int paneHeight = cellSize * height;
-        int paneWidth = cellSize * width;
+        double paneWidth = cellSize * width;
+        double paneHeight = cellSize * height;
 
         labirynthPane.setPrefSize(paneWidth, paneHeight);
 
-        int translateX = (maxWidth - paneWidth) / 2;
-        int translateY = (maxHeight - paneHeight) / 2;
+        double translateX = (maxWidth - paneWidth) / 2;
+        double translateY = (maxHeight - paneHeight) / 2;
 
         labirynthPane.setTranslateX(translateX);
         labirynthPane.setTranslateY(translateY);
@@ -61,7 +62,7 @@ public class GeneratorController {
     private void drawLabyrinth(Labyrinth labyrinth) {
         labirynthPane.getChildren().clear();
 
-        int cellSize = (int) Math.round(labirynthPane.getPrefWidth()) / labyrinth.getWidth();
+        double cellSize = labirynthPane.getWidth() / labyrinth.getWidth();
 
         for (int y = 0; y < labyrinth.getHeight(); y++) {
             for (int x = 0; x < labyrinth.getWidth(); x++) {
