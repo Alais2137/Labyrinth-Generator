@@ -28,19 +28,19 @@ public class Labyrinth {
     }
 
     public boolean isPassage(int x, int y) {
-        return this.cells.get(y * this.width + x).isPassage();
+        return this.cells.get(x * this.height + y).isPassage();
     }
 
     protected Field getField(int x, int y) {
-        return this.cells.get(x * this.width + y);
+        return this.cells.get(x * this.height + y);
     }
 
     protected void setAsWall(int x, int y) {
-        this.cells.get(x * this.width + y).setAsWall();
+        this.cells.get(x * this.height + y).setAsWall();
     }
 
     protected void setAsPassage(int x, int y) {
-        this.cells.get(x * this.width + y).setAsPassage();
+        this.cells.get(x * this.height + y).setAsPassage();
     }
 
     @Override

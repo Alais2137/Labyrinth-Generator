@@ -10,7 +10,6 @@ public class PrimAlgorythm implements Algorythm {
 
     private Labyrinth labyrinth;
 
-    // FIXME - setting the width and height has no sense
     public PrimAlgorythm(int width, int height) {
         this.width = width * 2 + 1;
         this.height = height * 2 + 1;
@@ -94,16 +93,16 @@ public class PrimAlgorythm implements Algorythm {
         HashSet<Field> frontiers = new HashSet<>();
 
         // If the field is not on the edge and is a wall, add it to the set
-        if (x > 2 && !labyrinth.getField(x - 2, y).isPassage()) {
+        if (x > 2 && !labyrinth.isPassage(x - 2, y)) {
             frontiers.add(labyrinth.getField(x - 2, y));
         }
-        if (x < width - 3 && !labyrinth.getField(x + 2, y).isPassage()) {
+        if (x < width - 3 && !labyrinth.isPassage(x + 2, y)) {
             frontiers.add(labyrinth.getField(x + 2, y));
         }
-        if (y > 2 && !labyrinth.getField(x, y - 2).isPassage()) {
+        if (y > 2 && !labyrinth.isPassage(x, y - 2)) {
             frontiers.add(labyrinth.getField(x, y - 2));
         }
-        if (y < height - 3 && !labyrinth.getField(x, y + 2).isPassage()) {
+        if (y < height - 3 && !labyrinth.isPassage(x, y + 2)) {
             frontiers.add(labyrinth.getField(x, y + 2));
         }
 
@@ -114,16 +113,16 @@ public class PrimAlgorythm implements Algorythm {
         HashSet<Field> neighbours = new HashSet<>();
 
         // If the field is not on the edge and is a passage, add it to the set
-        if (x > 2 && labyrinth.getField(x - 2, y).isPassage()) {
+        if (x > 2 && labyrinth.isPassage(x - 2, y)) {
             neighbours.add(labyrinth.getField(x - 2, y));
         }
-        if (x < width - 3 && labyrinth.getField(x + 2, y).isPassage()) {
+        if (x < width - 3 && labyrinth.isPassage(x + 2, y)) {
             neighbours.add(labyrinth.getField(x + 2, y));
         }
-        if (y > 2 && labyrinth.getField(x, y - 2).isPassage()) {
+        if (y > 2 && labyrinth.isPassage(x, y - 2)) {
             neighbours.add(labyrinth.getField(x, y - 2));
         }
-        if (y < height - 3 && labyrinth.getField(x, y + 2).isPassage()) {
+        if (y < height - 3 && labyrinth.isPassage(x, y + 2)) {
             neighbours.add(labyrinth.getField(x, y + 2));
         }
 
