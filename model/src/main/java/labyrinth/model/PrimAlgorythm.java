@@ -12,8 +12,8 @@ public class PrimAlgorythm implements Algorythm {
 
     // FIXME - setting the width and height has no sense
     public PrimAlgorythm(int width, int height) {
-        this.width = width;
-        this.height = height;
+        this.width = width * 2 + 1;
+        this.height = height * 2 + 1;
     }
 
     // Algorythm based on https://stackoverflow.com/questions/29739751/implementing-a-randomly-generated-maze-using-prims-algorithm

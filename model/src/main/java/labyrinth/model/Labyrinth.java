@@ -27,7 +27,7 @@ public class Labyrinth {
         return this.height;
     }
 
-    public boolean getValue(int x, int y) {
+    public boolean isPassage(int x, int y) {
         return this.cells.get(y * this.width + x).isPassage();
     }
 

@@ -10,19 +10,19 @@ public class LabyrinthTest {
         Labyrinth labyrinth = new Labyrinth(3, 4);
         assertEquals(3, labyrinth.getWidth());
         assertEquals(4, labyrinth.getHeight());
-        assertEquals(false, labyrinth.getValue(1, 1));
+        assertEquals(false, labyrinth.isPassage(1, 1));
     }
 
     @Test
     public void settersTest() {
         Labyrinth labyrinth = new Labyrinth(3, 4);
-        assertEquals(false, labyrinth.getValue(1, 1));
+        assertEquals(false, labyrinth.isPassage(1, 1));
 
         labyrinth.setAsPassage(1, 1);
-        assertEquals(true, labyrinth.getValue(1, 1));
+        assertEquals(true, labyrinth.isPassage(1, 1));
         
         labyrinth.setAsWall(1, 1);
-        assertEquals(false, labyrinth.getValue(1, 1));
+        assertEquals(false, labyrinth.isPassage(1, 1));
     }
 
     @Test
